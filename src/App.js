@@ -25,6 +25,7 @@ function App() {
       onKeyDown(e);
     });
     checkFood();
+
     const interval = setInterval(moveSnake, speed);
 
     return () => {
@@ -58,7 +59,7 @@ function App() {
     if (checkIfOutofBorders()) {
       return;
     }
-    checkFood();
+    snakeCollaps();
 
     let dots = [...snake];
 
@@ -97,7 +98,7 @@ function App() {
     }
   };
   const onGameOver = () => {
-    alert("GAME OVER", "Snake length is " + snake.length);
+    alert("GAME OVER Snake length is " + snake.length);
     newGame();
   };
   const newGame = () => {
@@ -110,7 +111,6 @@ function App() {
     ]);
   };
   const checkFood = () => {
-    console.log("Sprawdzam");
     if (String(snake[snake.length - 1]) === String(food)) {
       growSnake();
       setFood(getRandomCordiantions());
@@ -121,7 +121,6 @@ function App() {
   };
   const growSnake = () => {
     let dots = [...snake];
-    console.log(snake);
 
     let newElement = dots[dots.length - 1];
 
@@ -142,9 +141,20 @@ function App() {
         return;
     }
     dots.push(newElement);
-    console.log(dots);
 
     setSnake(dots);
+  };
+
+  const snakeCollaps = () => {
+    console.log("sprawdzam");
+    let snakeBody = [...snake];
+    let head = snakeBody[snakeBody.length - 1];
+    snakeBody.pop();
+    snakeBody.forEach((dot) => {
+      if (head[0] == dot[0] && head[1] == dot[1]) {
+        onGameOver();
+      }
+    });
   };
 
   return (
