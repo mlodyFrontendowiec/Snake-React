@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import Food from "./components/Food";
 import Snake from "./components/Snake";
 
@@ -11,16 +11,19 @@ const getRandomCordiantions = () => {
 };
 
 function App() {
+  const [direction, setDirection] = useState("UP");
   const [snake, setSnake] = useState([
     [0, 0],
     [2, 0],
   ]);
   const [food, setFood] = useState(getRandomCordiantions());
-  const { direction, setDirection } = useState("RIGHT");
 
-  useEffect(() => document.addEventListener("keydown", onKeyDown), []);
+  useEffect(() => {
+    document.addEventListener("keydown", (e) => {
+      onKeyDown(e);
+    });
+  }, []);
   const onKeyDown = (e) => {
-    e = e || window.event;
     switch (e.keyCode) {
       case 38:
         setDirection("UP");
