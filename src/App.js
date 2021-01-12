@@ -25,6 +25,8 @@ function App() {
       onKeyDown(e);
     });
     checkFood();
+    snakeCollaps();
+    checkIfOutofBorders();
 
     const interval = setInterval(moveSnake, speed);
 
@@ -56,11 +58,6 @@ function App() {
   };
 
   const moveSnake = () => {
-    if (checkIfOutofBorders()) {
-      return;
-    }
-    snakeCollaps();
-
     let dots = [...snake];
 
     let head = dots[dots.length - 1];
@@ -146,13 +143,13 @@ function App() {
   };
 
   const snakeCollaps = () => {
-    console.log("sprawdzam");
     let snakeBody = [...snake];
     let head = snakeBody[snakeBody.length - 1];
     snakeBody.pop();
     snakeBody.forEach((dot) => {
-      if (head[0] == dot[0] && head[1] == dot[1]) {
+      if (head[0] === dot[0] && head[1] === dot[1]) {
         onGameOver();
+        return true;
       }
     });
   };
