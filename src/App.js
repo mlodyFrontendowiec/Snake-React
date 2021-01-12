@@ -34,16 +34,20 @@ function App() {
   const onKeyDown = (e) => {
     switch (e.keyCode) {
       case 38:
-        setDirection("UP");
+        if (direction === "DOWN") return;
+        else setDirection("UP");
         break;
       case 40:
-        setDirection("DOWN");
+        if (direction === "UP") return;
+        else setDirection("DOWN");
         break;
       case 37:
-        setDirection("LEFT");
+        if (direction === "RIGHT") return;
+        else setDirection("LEFT");
         break;
       case 39:
-        setDirection("RIGHT");
+        if (direction === "LEFT") return;
+        else setDirection("RIGHT");
         break;
       default:
         return;
@@ -60,7 +64,9 @@ function App() {
 
     let head = dots[dots.length - 1];
 
-    switch (direction) {
+    const newDirection = direction;
+
+    switch (newDirection) {
       case "RIGHT":
         head = [head[0] + 2, head[1]];
         break;
@@ -76,6 +82,7 @@ function App() {
       default:
         return;
     }
+    if (newDirection !== direction) return;
     dots.push(head);
     dots.shift();
 
@@ -107,6 +114,7 @@ function App() {
     if (String(snake[snake.length - 1]) === String(food)) {
       growSnake();
       setFood(getRandomCordiantions());
+      setSpeed(speed - 10);
     } else {
       return;
     }
